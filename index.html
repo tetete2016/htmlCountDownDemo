@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        var EventClass = function (date, name) {
+            this.date = date;
+            this.name = name;
+            var e = document.createElement("div");
+            document.body.appendChild(e);
+            this.element = e;
+            this.update = function () {
+                e.innerHTML = "";
+                var now = Date.now();
+                var t = this.date.getTime();
+                var str = "";
+                str +=this.name;
+                str += "<br>";
+                str += "event date:" + date.toString();
+                str += "<br>";
+                if (t - now > 0) {
+                    if (t - now > 24 * 3600 * 1000) {
+                        str += Math.floor((t - now) / (24 * 3600 * 1000)) + "days remaining";
+                        str += "<br>";
+                    } else if (t - now > 3600 * 1000) {
+                        str += Math.floor((t - now) / (3600 * 1000)) + "hours remaining";
+                        str += "<br>";
+
+                    } else if (t - now > 5*60 * 1000) {
+                        str += Math.floor((t - now) / (60 * 1000)) + "minutes remaining";
+                        str += "<br>";
+                    } else {
+                        str += Math.floor((t - now) / (60 * 1000)) + "m";
+                        str += Math.floor((t - now) / (1000))%60 + "s remaining";
+                        str += "<br>";
+                    }
+                } else {
+                    str += "unavailable event";
+                }
+                e.innerHTML = str;
+                /*
+                str+=(t-now)
+                str += "<br>";*/
+            }
+            this.update();
+        };
+        var event1 = new EventClass(new Date(2018, 9, 12), "event1");
+        var event2 = new EventClass(new Date(2017, 9, 12), "event2");
+        var event3 = new EventClass(new Date(Date.now() + 12 * 3600 * 1000), "event3");
+        var event4 = new EventClass(new Date(Date.now() + 15 * 60 * 1000), "event4");
+        var event5 = new EventClass(new Date(Date.now() + 4 * 60 * 1000), "event5");
+        var event6 = new EventClass(new Date(Date.now() - 12 * 3600 * 1000), "event6");
+        setInterval(function () {
+            event1.update();
+            event2.update();
+            event3.update();
+            event4.update();
+            event5.update();
+            event6.update();
+        }, 1000);
+    </script>
+</body>
+</html>
